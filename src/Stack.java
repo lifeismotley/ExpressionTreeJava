@@ -1,8 +1,9 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 /**
+ * The following bulk of code is a modified version of a Java Stack implementation found online, cited below:
+ * Changes made by: Justin Zhao, jxz2101, 3/26/2013 for the purposes of Columbia University, COMS 3134
  *  The <tt>Stack</tt> class represents a last-in-first-out (LIFO) stack of generic items.
  *  It supports the usual <em>push</em> and <em>pop</em> operations, along with methods
  *  for peeking at the top item, testing if the stack is empty, and iterating through
@@ -131,71 +132,5 @@ public class Stack<Item> implements Iterable<Item> {
             current = current.next; 
             return item;
         }
-    }
-
-   /**
-     * A test client.
-     */
-    public static void main(String[] args) {
-        Stack<BinaryTree> stack = new Stack<BinaryTree>(); //stack for building the tree
-        Stack<Integer> calc = new Stack<Integer>(); //stack for calculating postfix input
-        String[] input = args[0].split(" "); //split the arguments by space 
-        
-        for (int i = 0; i < input.length; i++) {
-        	
-        	if (!input[i].equals("+") && !input[i].equals("-") && !input[i].equals("*") && !input[i].equals("/")) {
-            	/*
-            	 * if its a number
-            	 * create a tree of that node and push it onto the stack
-            	 */
-        		BinaryTree tree = new BinaryTree();
-        		tree.insert(input[i]);
-        		stack.push(tree);
-        		
-        		calc.push(Integer.parseInt(input[i]));
-        	} else {
-        		/*
-        		 * otherwise its an expression
-        		 * pop the first two trees of the stack and merge them
-        		 */
-        		BinaryTree t1 = stack.pop();
-        		BinaryTree t2 = stack.pop();
-        		stack.push(t2.mergeWith(t1, input[i]));
-        		
-        		int n1 = calc.pop();
-        		int n2 = calc.pop();
-        		int ans;
-        		switch (input[i]) {
-        			case "+":
-        				ans = n1+n2;
-        				break;
-        			case "-":
-        				ans = n1-n2;
-        				break;
-        			case "*":
-        				ans = n1*n2;
-        				break;
-        			case "/":
-        				ans = n1/n2;
-        				break;
-        			default: ans = 0; 
-        		}
-        		calc.push(ans);
-        	}
-        }
-        
-        //popping the final tree
-        BinaryTree finalTree = stack.pop();
-        
-        //printing out inorder, postorder, and preorder traversals
-        System.out.println("Infix:");
-        finalTree.printTree();
-        System.out.println("Postfix:");
-        finalTree.printPostorder();
-        System.out.println("Prefix:");
-        finalTree.printPreorder();
-        
-        System.out.println("Result: " + calc.pop());
-        
     }
 }
