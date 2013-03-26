@@ -1,6 +1,6 @@
 /**
  * Tester class for an expression tree implemented through a stack
- * @author Jing
+ * @author Justin Zhao, jxz2101
  * 3/26/2013
  * COMS 3134, Programming HW #2
  *

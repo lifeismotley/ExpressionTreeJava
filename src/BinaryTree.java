@@ -1,8 +1,8 @@
 /**
  * A Modified Binary Tree class for the purposes of an expression tree
- * @author Jing
+ * @author Justin Zhao
  * jxz2101
- * Data Structures Programming #2
+ * Data Structures Programming #2, COMS 3134
  *
  */
 public class BinaryTree {

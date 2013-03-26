@@ -1,6 +1,8 @@
 /**
  * This class is used as nodes for the Binary Tree class
- * @author Jing
+ * @author Justin Zhao
+ * 3/26/2013, COMS 3134 Columbia University, Programming HW #2
+ * jxz2101
  *
  */
 /*
