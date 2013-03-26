@@ -168,13 +168,17 @@ public class Stack<Item> implements Iterable<Item> {
         	} else {
         		BinaryTree t1 = stack.pop();
         		BinaryTree t2 = stack.pop();
-        		stack.push(t1.mergeWith(t2, input[i]));
+        		stack.push(t2.mergeWith(t1, input[i]));
         	}
         }
         
         BinaryTree finalTree = stack.pop();
+        System.out.println("In order:");
         finalTree.printTree();
+        System.out.println("Post order:");
         finalTree.printPostorder();
+        System.out.println("Pre order:");
+        finalTree.printPreorder();
         
         System.out.println("(" + stack.size() + " left on stack)");
         

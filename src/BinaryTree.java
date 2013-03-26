@@ -98,6 +98,27 @@ public class BinaryTree {
 		System.out.print(node.data + "  ");
 	}
 	
+	/**
+	 * Prints the node values in the "preorder" order. Uses a recursive helper
+	 * to do the traversal.
+	 */
+	public void printPreorder() {
+		printPreorder(root);
+		System.out.println();
+	}
+
+	public void printPreorder(Node node) {
+		if (node == null)
+			return;
+
+		// first deal with the node
+		System.out.print(node.data + "  ");
+		
+		// then recur on both subtrees
+		printPreorder(node.left);
+		printPreorder(node.right);
+	}
+	
 	public BinaryTree mergeWith(BinaryTree t, String expression) {
 		Node newRoot = new Node(expression);
 		newRoot.left = this.root;
