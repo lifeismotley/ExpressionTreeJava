@@ -1,3 +1,10 @@
+/**
+ * A Modified Binary Tree class for the purposes of an expression tree
+ * @author Jing
+ * jxz2101
+ * Data Structures Programming #2
+ *
+ */
 public class BinaryTree {
 	// Root node pointer. Will be null for an empty tree.
 	private Node root;
@@ -72,9 +79,15 @@ public class BinaryTree {
 			return;
 
 		// left, node itself, right
+		if (node.left != null && node.left.left == null) {
+			System.out.print("(");
+		}
 		printTree(node.left);
 		System.out.print(node.data + "  ");
 		printTree(node.right);
+		if (node.left != null && node.left.left == null) {
+			System.out.print(")");
+		}
 	}
 
 	/**
@@ -119,13 +132,17 @@ public class BinaryTree {
 		printPreorder(node.right);
 	}
 	
+	/**
+	 * Merges a Binary tree with this binary tree and returns the combined tree
+	 * @param t
+	 * @param expression
+	 * @return
+	 */
 	public BinaryTree mergeWith(BinaryTree t, String expression) {
 		Node newRoot = new Node(expression);
 		newRoot.left = this.root;
 		newRoot.right = t.root;
-		
 		BinaryTree newTree = new BinaryTree(newRoot);
-		
 		return newTree;
 	}
 }

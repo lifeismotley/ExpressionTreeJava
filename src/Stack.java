@@ -1,22 +1,6 @@
-/*************************************************************************
- *  Compilation:  javac Stack.java
- *  Execution:    java Stack < input.txt
- *
- *  A generic stack, implemented using a linked list. Each stack
- *  element is of type Item.
- *  
- *  % more tobe.txt 
- *  to be or not to - be - - that - - - is
- *
- *  % java Stack < tobe.txt
- *  to be not that or be (2 left on stack)
- *
- *************************************************************************/
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 
 /**
  *  The <tt>Stack</tt> class represents a last-in-first-out (LIFO) stack of generic items.
@@ -87,7 +71,6 @@ public class Stack<Item> implements Iterable<Item> {
         return item;                   // return the saved item
     }
 
-
    /**
      * Return the item most recently added to the stack.
      * @throws java.util.NoSuchElementException if stack is empty.
@@ -131,7 +114,6 @@ public class Stack<Item> implements Iterable<Item> {
         return true;
     } 
 
-
    /**
      * Return an iterator to the stack that iterates through the items in LIFO order.
      */
@@ -151,41 +133,69 @@ public class Stack<Item> implements Iterable<Item> {
         }
     }
 
-
    /**
      * A test client.
      */
     public static void main(String[] args) {
-        Stack<BinaryTree> stack = new Stack<BinaryTree>();
-        String[] input = args[0].split(" "); 
+        Stack<BinaryTree> stack = new Stack<BinaryTree>(); //stack for building the tree
+        Stack<Integer> calc = new Stack<Integer>(); //stack for calculating postfix input
+        String[] input = args[0].split(" "); //split the arguments by space 
         
         for (int i = 0; i < input.length; i++) {
-        	System.out.println("Dealing with: " + input[i]);
+        	
         	if (!input[i].equals("+") && !input[i].equals("-") && !input[i].equals("*") && !input[i].equals("/")) {
+            	/*
+            	 * if its a number
+            	 * create a tree of that node and push it onto the stack
+            	 */
         		BinaryTree tree = new BinaryTree();
         		tree.insert(input[i]);
         		stack.push(tree);
+        		
+        		calc.push(Integer.parseInt(input[i]));
         	} else {
+        		/*
+        		 * otherwise its an expression
+        		 * pop the first two trees of the stack and merge them
+        		 */
         		BinaryTree t1 = stack.pop();
         		BinaryTree t2 = stack.pop();
         		stack.push(t2.mergeWith(t1, input[i]));
+        		
+        		int n1 = calc.pop();
+        		int n2 = calc.pop();
+        		int ans;
+        		switch (input[i]) {
+        			case "+":
+        				ans = n1+n2;
+        				break;
+        			case "-":
+        				ans = n1-n2;
+        				break;
+        			case "*":
+        				ans = n1*n2;
+        				break;
+        			case "/":
+        				ans = n1/n2;
+        				break;
+        			default: ans = 0; 
+        		}
+        		calc.push(ans);
         	}
         }
         
+        //popping the final tree
         BinaryTree finalTree = stack.pop();
-        System.out.println("In order:");
+        
+        //printing out inorder, postorder, and preorder traversals
+        System.out.println("Infix:");
         finalTree.printTree();
-        System.out.println("Post order:");
+        System.out.println("Postfix:");
         finalTree.printPostorder();
-        System.out.println("Pre order:");
+        System.out.println("Prefix:");
         finalTree.printPreorder();
         
-        System.out.println("(" + stack.size() + " left on stack)");
+        System.out.println("Result: " + calc.pop());
         
-        /*
-        while (stack.size() > 0) {
-        	System.out.println(stack.pop());
-        }
-        */
     }
 }
